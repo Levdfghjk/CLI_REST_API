@@ -21,6 +21,8 @@ func main() {
 	defer conn.Close(ctx)
 
 	router.HandleFunc("/user", handlers.CreateUserHandler(*conn)).Methods("POST")
+	router.HandleFunc("/user/{id}", handlers.GetUserByIDHandler(*conn)).Methods("GET")
+	router.HandleFunc("/user/{id}", handlers.DeleteUserHandler(*conn)).Methods("DELETE")
 
 	fmt.Println("server started on :9091")
 

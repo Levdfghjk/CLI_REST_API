@@ -12,11 +12,6 @@ import (
 
 func CreateUserHandler(conn pgx.Conn) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodPost {
-			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-			return
-		}
-
 		var newUser models.User
 
 		if err := json.NewDecoder(r.Body).Decode(&newUser); err != nil {
