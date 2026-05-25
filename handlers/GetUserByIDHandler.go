@@ -21,10 +21,13 @@ func GetUserByIDHandler(conn pgx.Conn) http.HandlerFunc {
 
 		user, err := database.GetUserByID(r.Context(), conn, id)
 		if err != nil {
-			http.Error(w, "cant get user", http.StatusBadRequest)
+			http.Error(w, "cant get user", http.StatusInternalServerError)
 			return
 		}
 
-		json.NewEncoder(w).Encode(user)
+		if err := json.NewEncoder(w).Encode(user); err != nil {
+			http.Error(w, "invalid JSON", http.StatusBadRequest)
+			return
+		}
 	}
 }

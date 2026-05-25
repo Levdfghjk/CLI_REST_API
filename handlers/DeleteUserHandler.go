@@ -19,7 +19,7 @@ func DeleteUserHandler(conn pgx.Conn) http.HandlerFunc {
 		}
 
 		if err := database.DeleteUser(r.Context(), conn, id); err != nil {
-			http.Error(w, "problems with DB", http.StatusBadRequest)
+			http.Error(w, "problems with DB", http.StatusInternalServerError)
 			return
 		}
 
